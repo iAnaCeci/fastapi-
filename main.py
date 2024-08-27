@@ -3,18 +3,23 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from datetime import datetime
 import sqlalchemy
+import os
+from dotenv import load_dotenv, dotenv_values
 
+
+load_dotenv()
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/": {"origins": ""}})
 
-# MySQL database configuration
 db_config = {
-    'user': 'root',
-    'password': 'root',
-    'host': '127.0.0.1',
-    'database': 'bdracks'
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'database': os.getenv('DB_DATABASE')
 }
+
+
 
 
 def insert_drawer(nome, descricao, estado, rack_id):
